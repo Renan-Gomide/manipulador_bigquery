@@ -1,0 +1,44 @@
+[tool.poetry]
+name = "manipulador-bigquery"
+version = "0.1.0"
+description = "Código para manipulação de dados no BigQuery"
+authors = ["Venom <renangomide@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "3.13.*"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.7.2"
+pytest = "^8.3.3"
+pytest-cov = "^6.0.0"
+taskipy = "^1.14.0"
+
+[tool.pytest.ini_options]
+pythonpath = '.'
+addopts = '-p no:warnings'
+
+[tool.taskipy.tasks]
+run = 'python nomeProjeto/codigo.py'
+lint = 'ruff check . && ruff check . --diff'
+format = 'ruff check . --fix && ruff format .'
+pre_test = 'task lint'
+test = 'pytest --cov=pastaDoCodigo -vv'
+post_test = 'coverage html'
+
+[tool.ruff]
+line-lenght = 100
+extend-exclude = ['migrations']
+
+[tool.ruff.lint]
+preview = true
+select = ['I', 'F', 'E', 'W', 'PL', 'PT']
+
+[tool.ruff.format]
+preview = true
+quote-style = 'single'
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
